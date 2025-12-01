@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta-name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #eaf2ff, #d9e6ff);
+        }
+
+        .container {
+            width: 900px;
+            margin: 40px auto;
+            padding: 40px;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h2 {
+            font-size: 30px;
+            font-weight: 700;
+            color: #0a2a67;
+        }
+
+        .header p {
+            margin-top: -8px;
+            font-size: 14px;
+            color: #4d638f;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 40px;
+            row-gap: 20px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid #c6d6ff;
+            font-size: 14px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0a2a67;
+        }
+
+        .gender-box {
+            display: flex;
+            gap: 20px;
+            padding: 10px 0;
+        }
+
+        .photo-box {
+            width: 150px;
+            height: 150px;
+            border: 2px dashed #9bb7ff;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #0a2a67;
+            cursor: pointer;
+        }
+
+        .btn-register {
+            margin-top: 25px;
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+            border: none;
+            border-radius: 15px;
+            background: #0a57ff;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .success-box {
+            margin-top: 20px;
+            padding: 12px;
+            background: #32d67c;
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        .links {
+            margin-top: 18px;
+            text-align: center;
+        }
+
+        .links a {
+            color: #004ecb;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h2>Student Registration</h2>
+            <p>Create your account to access library services</p>
+        </div>
+
+        <div class="form-grid">
+
+            <!-- LEFT SIDE -->
+            <div>
+                <label>Full Name / Student ID</label>
+                <input type="text" id="fullname">
+
+                <label>Department / Course</label>
+                <input type="text" id="course">
+
+                <label>Select Department</label>
+                <select id="dept">
+                    <option>Computer</option>
+                    <option>Electrical</option>
+                    <option>Mechanical</option>
+                    <option>Civil</option>
+                    <option>Automobile</option>
+                </select>
+
+                <label>Year / Semester</label>
+                <select id="year">
+                    <option>FY</option>
+                    <option>SY</option>
+                    <option>TY</option>
+                </select>
+
+                <label>Mobile Number</label>
+                <input type="text" id="mobile" maxlength="10" oninput="validateMobile(this)">
+
+                <label>Gender</label>
+                <div class="gender-box">
+                    <label><input type="radio" name="gender" value="Male"> Male</label>
+                    <label><input type="radio" name="gender" value="Female"> Female</label>
+                    <label><input type="radio" name="gender" value="Other"> Other</label>
+                </div>
+
+                <label><input type="checkbox" id="terms"> I agree to the terms & conditions</label>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div>
+                <label>Create Username</label>
+                <input type="text" id="username">
+
+                <label>Create Password</label>
+                <input type="password" id="password">
+
+                <label>Confirm Password</label>
+                <input type="password" id="confirm_password">
+
+               <label>Security Question</label>
+               <input type="text" id="sec_question">
+
+
+                <label>Security Answer</label>
+                <input type="text" id="sec_answer">
+
+                <label>Upload Profile Photo</label>
+                <div class="photo-box" onclick="document.getElementById('photo').click()">📷 Upload</div>
+                <input type="file" id="photo" style="display:none;">
+            </div>
+        </div>
+
+        <button class="btn-register" onclick="register()">Register</button>
+
+        <div id="success" class="success-box">
+            Registration successful! Redirecting to Login...
+        </div>
+
+        <div class="links">
+            Already have an account? <a href="#">Login here</a><br>            
+        </div>
+
+    </div>
+
+    <script>
+
+        // Allow only digits in Mobile Field
+        function validateMobile(input) {
+            input.value = input.value.replace(/[^0-9]/g, "");
+        }
+
+        // Registration Validation
+        function register() {
+            let name = document.getElementById("fullname").value;
+            let username = document.getElementById("username").value;
+            let pass = document.getElementById("password").value;
+            let confirm = document.getElementById("confirm_password").value;
+            let mobile = document.getElementById("mobile").value;
+
+            if (name === "" || username === "" || pass === "" || confirm === "") {
+                alert("Please fill all required fields!");
+                return;
+            }
+
+            if (pass !== confirm) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            if (mobile.length !== 10) {
+                alert("Mobile number must be exactly 10 digits!");
+                return;
+            }
+
+            if (!document.getElementById("terms").checked) {
+                alert("You must agree to the Terms & Conditions!");
+                return;
+            }
+
+            document.getElementById("success").style.display = "block";
+
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>

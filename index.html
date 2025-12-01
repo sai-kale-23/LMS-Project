@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System - Login</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #e8f0ff;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .container {
+            width: 450px;
+            margin: 60px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 22px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        .title {
+            margin-bottom: 10px;
+            font-size: 26px;
+            font-weight: 700;
+            color: #0a2a67;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            margin-bottom: 20px;
+            color: #3b4f70;
+        }
+
+        .role-box {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .role {
+            padding: 12px 30px;
+            border: 2px solid #8cb3ff;
+            border-radius: 12px;
+            cursor: pointer;
+            background: #dceaff;
+            font-size: 16px;
+            font-weight: 600;
+            color: #0a2a67;
+            transition: 0.2s;
+        }
+
+        .role.active {
+            background: #9cc1ff;
+            border-color: #0a2a67;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid #c7d5ff;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .btn {
+            width: 95%;
+            padding: 13px;
+            border: none;
+            border-radius: 12px;
+            background: #0a2a67;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .links a {
+            font-size: 14px;
+            color: #0056d6;
+            text-decoration: none;
+            margin-top: 8px;
+            display: inline-block;
+        }
+
+        .error-box {
+            margin-top: 15px;
+            background: #ffdfc7;
+            padding: 10px;
+            border-radius: 10px;
+            color: #7d2d00;
+            font-size: 14px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="title">Login Portal</div>
+        <div class="subtitle">Select your role to continue</div>
+
+        <div class="role-box">
+            <div id="studentBtn" class="role active">🎓 Student</div>
+            <div id="adminBtn" class="role">🔧 Admin</div>
+        </div>
+
+        <input id="username" type="text" placeholder="Username / Email">
+        <input id="password" type="password" placeholder="Password">
+
+        <button class="btn" onclick="login()">Login</button>
+
+        <div class="links">
+            <a href="forgot.html">New Password?</a> |
+            <a href="registation.html">Student Registration Page</a>
+        </div>
+
+        <div id="error" class="error-box">Missing fields. Please fill out all required information.</div>
+    </div>
+
+
+    <script>
+        let role = "Student";
+
+        document.getElementById("studentBtn").addEventListener("click", () => {
+            role = "Student";
+            document.getElementById("studentBtn").classList.add("active");
+            document.getElementById("adminBtn").classList.remove("active");
+        });
+
+        document.getElementById("adminBtn").addEventListener("click", () => {
+            role = "Admin";
+            document.getElementById("adminBtn").classList.add("active");
+            document.getElementById("studentBtn").classList.remove("active");
+        });
+
+        function login() {
+            let user = document.getElementById("username").value;
+            let pass = document.getElementById("password").value;
+
+            let savedUser = localStorage.getItem("reg_username");
+            let savedPass = localStorage.getItem("reg_password");
+
+            if (user === "" || pass === "") {
+                document.getElementById("error").style.display = "block";
+                return;
+            }
+
+            if (user === savedUser && pass === savedPass) {
+                alert(role + " Login Successful!");
+                window.location.href = "student sinup.html";
+            } else {
+                alert("Invalid Username or Password!");
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forgot Password</title>
+    <style>
+        body {
+            margin: 0;
+            background: #eaf1ff;
+            font-family: Poppins, sans-serif;
+        }
+
+        .box {
+            width: 400px;
+            margin: 70px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            border: 2px solid #9ebaff;
+            border-radius: 10px;
+            margin-top: 12px;
+        }
+
+        button {
+            padding: 12px 30px;
+            margin-top: 15px;
+            border: none;
+            background: #0a2a67;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Reset Password</h2>
+
+    <h4 id="question"></h4>
+
+    <input type="text" id="answer" placeholder="Enter Answer">
+
+    <button onclick="checkAnswer()">Verify</button>
+
+    <div id="newPassSection" style="display:none;">
+        <input type="password" id="newpass" placeholder="Enter New Password">
+        <button onclick="saveNewPass()">Save Password</button>
+    </div>
+</div>
+
+<script>
+    let savedQuestion = localStorage.getItem("reg_sec_question");
+    let savedAnswer = localStorage.getItem("reg_sec_answer");
+
+    document.getElementById("question").innerText = savedQuestion;
+
+    function checkAnswer() {
+        let ans = document.getElementById("answer").value;
+
+        if (ans === savedAnswer) {
+            alert("Correct Answer!");
+            document.getElementById("newPassSection").style.display = "block";
+        } else {
+            alert("Wrong Answer!");
+        }
+    }
+
+    function saveNewPass() {
+        let newPass = document.getElementById("newpass").value;
+        localStorage.setItem("reg_password", newPass);
+        alert("Password Updated Successfully!");
+        window.location.href = "login.html";
+    }
+</script>
+
+</body>
+</html>
